@@ -12,8 +12,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:id="@+id/userName"
         android:text="Home Activity"
         android:textStyle="italic"
-        android:textSize="46dp" />
+        android:textSize="25dp" />
+
+
 
 </FrameLayout>

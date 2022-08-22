@@ -9,7 +9,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
+import com.parse.ParseUser;
 import com.winshelosl.instaapp.databinding.ActivityMainBinding;
 
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity {
 
    ActivityMainBinding binding;
+
 
 
     @Override
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+
 
         replaceFragment(new HomeFragment());
 

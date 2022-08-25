@@ -5,13 +5,22 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +60,9 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
+
+    public String TAG= "HomeFragmentActivity";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +80,52 @@ public class HomeFragment extends Fragment {
 
     }
     TextView userName;
+    RecyclerView rvPosts;
+    private PostsAdapter adapter;
+    private List<Post> allPosts;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        rvPosts = view.findViewById(R.id.rvPosts);
+        allPosts = new ArrayList<>();
+        adapter = new PostsAdapter(getContext(), allPosts);
+        rvPosts.setAdapter(adapter);
 
-        userName = view.findViewById(R.id.userName);
-        userName.setText("Current User : " + ParseUser.getCurrentUser().getUsername());
+        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                queryPosts();
+
+       /// userName = view.findViewById(R.id.userName);
+       // userName.setText("Current User : " + ParseUser.getCurrentUser().getUsername());
     }
+
+
+
+    private void queryPosts() {
+        // Specify which class to query
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if( e != null){
+                    Log.e(TAG, "Issue with getting posts");
+                    return;
+                }
+
+                for (Post post: posts) {
+                    Log.i(TAG, "Post" + post.getDescription() + "Username: " +  post.getUser().getUsername() );
+                }
+
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+
 }

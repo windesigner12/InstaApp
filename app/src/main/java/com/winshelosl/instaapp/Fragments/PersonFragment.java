@@ -1,6 +1,5 @@
-package com.winshelosl.instaapp;
+package com.winshelosl.instaapp.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,9 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.parse.ParseUser;
+import com.winshelosl.instaapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,26 +74,18 @@ public class PersonFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btLogout = view.findViewById(R.id.btlogout);
-
-                btLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logoutUser();
-            }
-        });
+//        btLogout = view.findViewById(R.id.btlogout);
+//
+//                btLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                logoutUser();
+//            }
+//        });
     }
 
 
 
-    public void logoutUser(){
-        ParseUser.logOut();
-        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
-        Toast.makeText(getContext(),"Logout", Toast.LENGTH_SHORT).show();
-       Intent i = new Intent(getContext(), login.class);
-     startActivity(i);
 
-
-    }
 
 }

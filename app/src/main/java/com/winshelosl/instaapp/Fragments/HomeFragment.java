@@ -1,23 +1,28 @@
-package com.winshelosl.instaapp;
+package com.winshelosl.instaapp.Fragment;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
+import com.winshelosl.instaapp.Adapter.PostsAdapter;
+import com.winshelosl.instaapp.Adapter.PostsAdapterGrid;
+import com.winshelosl.instaapp.EndlessRecyclerViewScrollListener;
+import com.winshelosl.instaapp.Post;
+import com.winshelosl.instaapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,36 +83,85 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
 
+
     }
-    TextView userName;
-    RecyclerView rvPosts;
-    private PostsAdapter adapter;
-    private List<Post> allPosts;
+
+    protected RecyclerView rvPosts;
+    protected RecyclerView rvPosts1;
+    protected SwipeRefreshLayout swipeContainer;
+    protected PostsAdapter adapter;
+    protected PostsAdapterGrid adapterGrid;
+    protected List<Post> allPosts;
+    EndlessRecyclerViewScrollListener scrollListener;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         rvPosts = view.findViewById(R.id.rvPosts);
+
+        swipeContainer = view.findViewById(R.id.swipeContainer);
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
+        adapterGrid = new PostsAdapterGrid(getContext(), allPosts);
+
         rvPosts.setAdapter(adapter);
 
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                queryPosts();
 
-       /// userName = view.findViewById(R.id.userName);
-       // userName.setText("Current User : " + ParseUser.getCurrentUser().getUsername());
+        queryPosts();
+
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchTimelineAsync(0);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
+               rvPosts.setLayoutManager(layoutManager);
+
+                ///EndlessRecyclerView
+                rvPosts.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+
+                scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+                    @Override
+                    public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                        Log.i("HomeFragment", "Load More Data");
+                        //fetchTimelineAsync(0);
+
+                        queryPosts();
+                    }
+
+        };
+
+                // Adds the scroll listener to RecyclerView
+                rvPosts.addOnScrollListener(scrollListener);
+
+
+
+
     }
 
-
-
-    private void queryPosts() {
+    protected void queryPosts() {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-
+        //query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
@@ -122,8 +176,22 @@ public class HomeFragment extends Fragment {
 
                 allPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
+
+
             }
         });
+
+    }
+
+
+    protected void fetchTimelineAsync(int page) {
+        // Send the network request to fetch the updated data
+        // getHomeProfileFragment is an example endpoint.
+        adapter.clear();
+        // ...the data has come back, add new items to your adapter...
+        queryPosts();
+        // Now we call setRefreshing(false) to signal refresh has finished
+        swipeContainer.setRefreshing(false);
 
     }
 

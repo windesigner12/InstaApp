@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp;
+package com.winshelosl.instaapp.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.VISIBLE;
@@ -22,19 +22,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.winshelosl.instaapp.Post;
+import com.winshelosl.instaapp.R;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

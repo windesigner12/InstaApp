@@ -3,10 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
 
-
     <item
-     android:id="@+id/Send_msg"
+        android:id="@+id/Send_msg"
         android:icon="@drawable/ic_baseline_send_24"
         app:showAsAction="ifRoom"
         android:title="Send"/>
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        app:showAsAction="collapseActionView" />
+
 </menu>

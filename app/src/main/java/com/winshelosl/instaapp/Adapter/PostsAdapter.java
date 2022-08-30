@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp;
+package com.winshelosl.instaapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.winshelosl.instaapp.Post;
+import com.winshelosl.instaapp.R;
 
 import java.util.List;
 
@@ -69,17 +72,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
              tvDescription = itemView.findViewById(R.id.tvDescription);
              imProfilePicture = itemView.findViewById(R.id.imProfilePicture);
              ivPost = itemView.findViewById(R.id.ivPost);
+
         }
 
         public void bind(Post post) {
 
                tvDescription.setText(post.getDescription());
                tvUserName.setText(post.getUser().getUsername());
+
                ParseFile image = post.getImage();
+               ParseFile imageProfile = post.getImageProfile();
+
                if (image != null) {
                    Glide.with(context).load(image.getUrl()).fitCenter().into(ivPost);
                }
-//3
+
+            if (imageProfile != null) {
+                Glide.with(context).load(imageProfile.getUrl()).fitCenter().into(imProfilePicture);
+            }
 
                    //Glide.with(context).load(pos).fitCenter().into(imProfilePicture);
 

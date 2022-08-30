@@ -83,11 +83,9 @@ public class login extends AppCompatActivity {
 
     private void goMainActivity() {
 
-        //user = new ParseUser();
         Intent i = new Intent(this, MainActivity.class);
-        //i.putExtra("user", user);
         startActivity(i);
-        //finish();
+        finish();
     }
 
 }

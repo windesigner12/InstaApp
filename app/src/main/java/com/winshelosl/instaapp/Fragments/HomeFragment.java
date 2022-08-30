@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp.Fragment;
+package com.winshelosl.instaapp.Fragments;
 
 import android.os.Bundle;
 
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
     }
 
     protected RecyclerView rvPosts;
-    protected RecyclerView rvPosts1;
+
     protected SwipeRefreshLayout swipeContainer;
     protected PostsAdapter adapter;
     protected PostsAdapterGrid adapterGrid;
@@ -130,6 +130,8 @@ public class HomeFragment extends Fragment {
                 android.R.color.holo_red_light);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+              // layoutManager.setReverseLayout(true);
+               layoutManager.setStackFromEnd(true);
 
                rvPosts.setLayoutManager(layoutManager);
 

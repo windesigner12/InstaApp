@@ -1,17 +1,18 @@
-package com.winshelosl.instaapp;
+package com.winshelosl.instaapp.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.winshelosl.instaapp.Post;
+import com.winshelosl.instaapp.R;
 
 import java.util.List;
 

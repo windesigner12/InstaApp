@@ -1,17 +1,17 @@
 package com.winshelosl.instaapp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.TextView;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
+import com.winshelosl.instaapp.Fragments.AddPicFragment;
+import com.winshelosl.instaapp.Fragments.HomeFragment;
+import com.winshelosl.instaapp.Fragments.ProfileFragment;
 import com.winshelosl.instaapp.databinding.ActivityMainBinding;
 
 import androidx.appcompat.widget.Toolbar;
@@ -23,8 +23,6 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity {
 
    ActivityMainBinding binding;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +39,23 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-
-
         replaceFragment(new HomeFragment());
 
         binding.bottomNavigationView.setOnItemSelectedListener(item->{
 
             switch (item.getItemId()) {
 
-                case R.id.home:
-                    replaceFragment(new HomeFragment());
-                    break;
+
                 case R.id.addPic:
                     replaceFragment(new AddPicFragment());
 
                     break;
                 case R.id.Person:
-                    replaceFragment(new PersonFragment());
+                    replaceFragment(new ProfileFragment());
+                    break;
+                case R.id.home:
+                    default:
+                    replaceFragment(new HomeFragment());
                     break;
 
             }
@@ -65,14 +63,22 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayout, fragment);
                 fragmentTransaction.commit();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.logout){
 
+            logoutUser();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -82,6 +88,16 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.top_navmenu, menu);
         return true;
+    }
+
+    public void logoutUser(){
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
+        Toast.makeText(this,"Logout", Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, login.class);
+        startActivity(i);
+
+
     }
 
 }

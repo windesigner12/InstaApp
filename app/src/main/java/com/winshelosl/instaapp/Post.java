@@ -11,7 +11,10 @@ import com.parse.ParseUser;
 public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
+
+    public static final String KEY_IMAGE_USER = "profilepic";
     public static final String KEY_USER = "user";
+    public static final String KEY_CREATED_KEY= "createAt";
 
 
 
@@ -23,9 +26,12 @@ public class Post extends ParseObject {
         put(KEY_DESCRIPTION, description);
     }
 
-
     public ParseFile getImage() {
         return getParseFile(KEY_IMAGE);
+    }
+
+    public ParseFile getImageProfile() {
+        return getParseFile(KEY_IMAGE_USER);
     }
 
     public void setImage(ParseFile parseFile){
@@ -39,5 +45,7 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user){
         put(KEY_USER, user);
     }
+
+
 
 }

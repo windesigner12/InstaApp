@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp.Fragment;
+package com.winshelosl.instaapp.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -28,19 +28,12 @@ public class ProfileFragment extends HomeFragment {
         return inflater.inflate(R.layout.fragment_person, container, false);
     }
 
-
-
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //adapter.clear();
-
         rvPosts.setAdapter(adapterGrid);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false);
-
         rvPosts.setLayoutManager(layoutManager);
     }
 
@@ -63,11 +56,8 @@ public class ProfileFragment extends HomeFragment {
             for (Post post: posts) {
                 Log.i(TAG, "Post" + post.getDescription() + "Username: " +  post.getUser().getUsername() );
             }
-
-
             allPosts.addAll(posts);
             adapterGrid.notifyDataSetChanged();
-
 
         }
     });
@@ -75,10 +65,4 @@ public class ProfileFragment extends HomeFragment {
 }
 
 
-//    @Override
-//    protected void fetchTimelineAsync(int page) {
-//        allPosts.clear();
-//        //queryPosts();
-//        swipeContainer.setRefreshing(false);
-//    }
 }

@@ -7,7 +7,7 @@
     <item android:title="addPic"
         android:icon="@drawable/ic_baseline_add_box_24"
         android:id="@+id/addPic"/>
-    <item android:title="Person"
+    <item android:title="Profile"
         android:icon="@drawable/ic_baseline_person_24"
         android:id="@+id/Person"/>
 </menu>

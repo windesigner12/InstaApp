@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp.Fragment;
+package com.winshelosl.instaapp.Fragments;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.winshelosl.instaapp.Fragment;
+package com.winshelosl.instaapp.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 import static android.view.View.VISIBLE;
@@ -12,11 +12,14 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -29,6 +32,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.winshelosl.instaapp.MainActivity;
 import com.winshelosl.instaapp.Post;
 import com.winshelosl.instaapp.R;
 
@@ -150,12 +154,10 @@ public class AddPicFragment extends Fragment {
                 pb.setVisibility(ProgressBar.VISIBLE);
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 savePost(description , currentUser, photoFile);
+
+
               }
         });
-
-
-
-
 
 
     }
@@ -226,9 +228,6 @@ public class AddPicFragment extends Fragment {
             }
         });
     }
-
-
-
 
 
 
